@@ -17,7 +17,6 @@ class NeuralNetwork(object):
 
         self._build_model()
 
-
     def _build_model(self):
 
         model = Sequential()

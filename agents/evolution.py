@@ -1,5 +1,6 @@
 import itertools
 import os
+import pickle
 
 import numpy as np
 
@@ -8,18 +9,24 @@ from network import NeuralNetwork
 class GeneticAlgorithm(object):
 
     def __init__(self,
-                name, 
                 savepath,
                 population_size=10,
                 number_of_generations=10,
                 mutation_rate=0.1,
+                load_model=True,
+                model=None
                 ):
         
-        self.name = name
         self.savepath = savepath
         self.population_size = population_size
         self.number_of_generations = number_of_generations
         self.mutation_rate = mutation_rate
+        self.load_model = load_model
+
+        if self.load_model==True:
+            self.model = model
+            with open(os.path.join(self.savepath, self.model), "rb") as fp:
+                self.population = pickle.load(fp)
 
     def set_env(self, env):
         self.env = env
@@ -160,13 +167,16 @@ class GeneticAlgorithm(object):
                 
             print("Population size: {}".format(len(new_population)))
             self.population = new_population
-        
-        best_model = sorted(self.population.items(), 
-                            key=lambda x: x[1], 
-                            reverse=True)[0][0]
 
-        print(os.path.join(self.savepath, self.name + '.pkl'))
-        best_model._model.save(os.path.join(self.savepath, self.name + '.pkl'))
+            if (i+1) % 5 == 0:
+                self.save_state(i)
+        
+
+    def save_state(self, last_generation):
+        filename = 'state_generation_' + str(last_generation) + '.pkl'
+
+        with open(os.path.join(self.savepath, filename), 'wb') as fp:
+            pickle.dump(self.population, fp)
 
 
     def control(self, params, controller):

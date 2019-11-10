@@ -3,13 +3,11 @@ import os
 
 import numpy as np
 
-sys.path.insert(0, '../evoman_framework/evoman')
+from keras.models import load_model
+sys.path.insert(0, 'evoman')
 
 from environment import Environment
 from controller import Controller
-
-from network import NeuralNetwork
-from evolution import GeneticAlgorithm
 
 experiment_name = 'test'
 
@@ -18,8 +16,7 @@ if not os.path.exists(experiment_name):
 
 if __name__=='__main__':
     # Defining controller
-    example = NeuralNetwork()
-    example.load_model('best_model5.pkl')
+    example = load_model('models/test.pkl')
 
     env = Environment(speed="normal",
                       enemymode="static",
