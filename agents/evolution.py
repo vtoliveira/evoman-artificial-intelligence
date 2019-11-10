@@ -1,4 +1,5 @@
 import itertools
+import os
 
 import numpy as np
 
@@ -7,18 +8,18 @@ from network import NeuralNetwork
 class GeneticAlgorithm(object):
 
     def __init__(self,
+                name, 
+                savepath,
                 population_size=10,
                 number_of_generations=10,
                 mutation_rate=0.1,
-                retention_rate=0.4,
-                crossover_rate=0.2):
+                ):
         
-
+        self.name = name
+        self.savepath = savepath
         self.population_size = population_size
         self.number_of_generations = number_of_generations
-        self.retention_rate = retention_rate
         self.mutation_rate = mutation_rate
-        self.crossover_rate = crossover_rate
 
     def set_env(self, env):
         self.env = env
@@ -49,7 +50,7 @@ class GeneticAlgorithm(object):
         n_hidden_layers = len(weights)
 
         mutate_layer = np.random.choice(n_hidden_layers)
-        mutate_value = np.random.uniform(-0.5, 0.5)
+        mutate_value = np.random.uniform(-1, 1)
 
         if weights[mutate_layer].ndim == 1:
             row_value = np.random.choice(weights[mutate_layer].shape[0])
@@ -163,13 +164,13 @@ class GeneticAlgorithm(object):
         best_model = sorted(self.population.items(), 
                             key=lambda x: x[1], 
                             reverse=True)[0][0]
-        
-        best_model._model.save('best_model6.pkl')
+
+        print(os.path.join(self.savepath, self.name + '.pkl'))
+        best_model._model.save(os.path.join(self.savepath, self.name + '.pkl'))
 
 
     def control(self, params, controller):
         params = (params-min(params))/float((max(params)-min(params)))
-
         action1, action2, action3, action4, action5 = controller.return_action(params)
 
         return [action1, action2, action3, action4, action5]
