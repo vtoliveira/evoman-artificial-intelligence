@@ -185,6 +185,3 @@ class GeneticAlgorithm(object):
 
         return [action1, action2, action3, action4, action5]
 
-if __name__=='__main__':
-    gen_alg = GeneticAlgorithm()
-    gen_alg.create_population()

@@ -41,10 +41,3 @@ class NeuroEvolution(object):
 
         return [action1, action2, action3, action4, action5]
 
-if __name__=='__main__':
-    params = np.array([-52.,  -1.,  -1.,  -1.,   0.,   
-                        0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,  0.,   0.,   0.,   0.,   0.,   0.])
-    
-    neural_net = NeuroEvolution()
-    print(neural_net.control(params))
-
