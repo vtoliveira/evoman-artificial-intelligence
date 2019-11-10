@@ -126,17 +126,6 @@ class GeneticAlgorithm(object):
             population_ordered = dict(sorted(self.population.items(), key=lambda x: x[1], reverse=True))
             print("Best fit for generation: {} is {}".format(i, list(population_ordered.values())[0]))
 
-            """
-            retained = int(len(population)*self.retention_rate)
-            population = dict(itertools.islice(population.items(), 0, retained))
-
-            if np.random.random() > 0.1:
-                random_model = NeuralNetwork()
-
-                # Calculate fitness
-                f, p, e, t = self.fitness(random_model)
-                population[random_model] = f
-            """
             offspring = {}
             while len(offspring) != self.population_size:
 

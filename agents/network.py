@@ -3,7 +3,7 @@ import numpy as np
 from keras.models import Sequential
 from keras.layers import Dense, Activation
 
-class NeuroEvolution(object):
+class NeuralNetwork(object):
 
     def __init__(self, input_shape=20, output_shape=5):
         self.input_shape = input_shape

@@ -8,18 +8,29 @@ sys.path.insert(0, 'evoman')
 from environment import Environment
 from controller import Controller
 
-from network import NeuroEvolution
+from evolution import GeneticAlgorithm
 
 experiment_name = 'test'
 
 if not os.path.exists(experiment_name):
 	os.makedirs(experiment_name)
 
-custom_controller = NeuroEvolution()
-env = Environment(speed="normal",
-                  enemymode="static",
-                  player_controller=custom_controller)
-
 if __name__=='__main__':
+    ga = GeneticAlgorithm(population_size=5,
+                          number_of_generations=10,
+                          mutation_rate=0.2)
+
+    env = Environment(speed="fastest",
+                      enemymode="static",
+                      player_controller=ga,
+                      enemies=[1, 3, 5, 8],
+                      multiplemode="yes",
+                      level=2,
+                      logs="off")
+                      
     env.update_parameter('contacthurt','player')
-    f, p, e, t = env.play()
+
+    ga.set_env(env)
+    ga.create_population()
+    ga.evolve()
+    
