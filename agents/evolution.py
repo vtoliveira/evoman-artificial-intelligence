@@ -13,8 +13,9 @@ class GeneticAlgorithm(object):
                 population_size=10,
                 number_of_generations=10,
                 mutation_rate=0.1,
-                load_model=True,
-                model=None
+                load_model=False,
+                model=None,
+                state=0
                 ):
         
         self.savepath = savepath
@@ -22,11 +23,15 @@ class GeneticAlgorithm(object):
         self.number_of_generations = number_of_generations
         self.mutation_rate = mutation_rate
         self.load_model = load_model
+        self.state = state
+        
 
         if self.load_model==True:
             self.model = model
             with open(os.path.join(self.savepath, self.model), "rb") as fp:
                 self.population = pickle.load(fp)
+        else:
+            self.population = None
 
     def set_env(self, env):
         self.env = env
@@ -126,8 +131,11 @@ class GeneticAlgorithm(object):
 
 
     def evolve(self):
+        if not self.population:
+            self.create_population()
+
         print("Starting Evolution:\n")
-        for i in range(self.number_of_generations):
+        for i in range(self.state, self.number_of_generations):
 
         
             # Sort population according to fitness value
@@ -168,8 +176,7 @@ class GeneticAlgorithm(object):
             print("Population size: {}".format(len(new_population)))
             self.population = new_population
 
-            if (i+1) % 5 == 0:
-                self.save_state(i)
+            self.save_state(i)
         
 
     def save_state(self, last_generation):
