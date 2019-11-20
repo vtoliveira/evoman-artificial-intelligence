@@ -18,14 +18,14 @@ if not os.path.exists(experiment_name):
 
 if __name__=='__main__':
     # Defining controller
-    with open('models/pop_50_gen_40__mr_02__1358_victor/state_generation_9.pkl', 'rb') as fp:
+    with open('models/pop_50_gen_40__mr_02__1248_victor/state_generation_9.pkl', 'rb') as fp:
         population = pickle.load(fp)
 
     population_ordered = dict(sorted(population.items(), key=lambda x: x[1], reverse=True))
 
-    env = Environment(speed="normal",
+    env = Environment(speed="fastest",
                       enemymode="static",
-                      player_controller=list(population_ordered.keys())[0],
+                      player_controller=list(population_ordered.keys())[2],
                       enemies=[1, 2, 3, 4, 5, 6, 7, 8],
                       multiplemode="yes",
                       level=2)
