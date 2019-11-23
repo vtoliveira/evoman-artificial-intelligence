@@ -4,7 +4,7 @@ import pickle
 
 import numpy as np
 
-from network import NeuralNetwork
+from network import NeuralNetwork, SimpleNeuralNetwork
 
 class GeneticAlgorithm(object):
 
@@ -40,7 +40,7 @@ class GeneticAlgorithm(object):
         population = dict()
         for i in range(self.population_size):
             # Initialize a neural model
-            model = NeuralNetwork()
+            model = SimpleNeuralNetwork()
 
             # Calculate fitness
             f, p, e, t = self.fitness(model)
@@ -58,7 +58,7 @@ class GeneticAlgorithm(object):
     def mutate(self, model):
 
         # Get model's weights
-        weights = model._model.get_weights()
+        weights = model.get_weights()
         n_hidden_layers = len(weights)
 
         mutate_layer = np.random.choice(n_hidden_layers)
@@ -73,12 +73,12 @@ class GeneticAlgorithm(object):
 
             weights[mutate_layer][row_value][col_value] = mutate_value
 
-        model._model.set_weights(weights)
+        model.set_weights(weights)
 
     def crossover(self, parent, mother):
         # Getting parent and mother weights
-        p_weights = parent._model.get_weights()
-        m_weights = mother._model.get_weights()
+        p_weights = parent.get_weights()
+        m_weights = mother.get_weights()
 
         n_hidden_layers = len(p_weights)
         crossover_layer = np.random.choice(n_hidden_layers)
@@ -97,8 +97,8 @@ class GeneticAlgorithm(object):
         p_weights[crossover_layer] = p_stacked_weight.reshape(original_shape)
         m_weights[crossover_layer] = m_stacked_weight.reshape(original_shape)
 
-        parent._model.set_weights(p_weights)
-        mother._model.set_weights(m_weights)
+        parent.set_weights(p_weights)
+        mother.set_weights(m_weights)
 
         return parent, mother
 
@@ -139,8 +139,8 @@ class GeneticAlgorithm(object):
 
         
             # Sort population according to fitness value
-            population_ordered = dict(sorted(self.population.items(), key=lambda x: x[1], reverse=True))
-            print("Best fit for generation: {} is {}".format(i, list(population_ordered.values())[0]))
+            print("Best fit for generation: {} is {}".format(i, 
+                                    np.max(list(self.population.values()))))
 
             offspring = {}
             while len(offspring) != self.population_size:
@@ -149,14 +149,14 @@ class GeneticAlgorithm(object):
                                           size=2,
                                           replace=True)
 
-                new_parent_weight = parents[0]._model.get_weights()
-                new_mother_weight = parents[1]._model.get_weights()
+                new_parent_weight = parents[0].get_weights()
+                new_mother_weight = parents[1].get_weights()
 
-                parent = NeuralNetwork()
-                mother = NeuralNetwork()
+                parent = SimpleNeuralNetwork()
+                mother = SimpleNeuralNetwork()
 
-                parent._model.set_weights(new_parent_weight)
-                mother._model.set_weights(new_mother_weight)
+                parent.set_weights(new_parent_weight)
+                mother.set_weights(new_mother_weight)
 
                 parent, mother = self.crossover(parent, mother)
                 children, f_o = self.single_tournament(parent, mother)
@@ -165,7 +165,6 @@ class GeneticAlgorithm(object):
 
                 # Check for mutation
                 if self.mutation_rate > np.random.random():
-                    # model_to_mutate = np.random.choice(list(self.population.keys()))
                     self.mutate(children)
                     print("Mutation happened!\n")
 

@@ -18,7 +18,7 @@ if not os.path.exists(experiment_name):
 
 if __name__=='__main__':
     # Defining controller
-    with open('models/pop_50_gen_40__mr_02__1248_victor/state_generation_9.pkl', 'rb') as fp:
+    with open('models/pop_50_gen_40__mr_02__1248_simplenet_victor/state_generation_2.pkl', 'rb') as fp:
         population = pickle.load(fp)
 
     population_ordered = dict(sorted(population.items(), key=lambda x: x[1], reverse=True))
