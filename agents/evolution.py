@@ -136,7 +136,6 @@ class GeneticAlgorithm(object):
 
         print("Starting Evolution:\n")
         for i in range(self.state, self.number_of_generations):
-
         
             # Sort population according to fitness value
             print("Best fit for generation: {} is {}".format(i, 

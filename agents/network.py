@@ -1,5 +1,6 @@
 import numpy as np
 
+from copy import deepcopy 
 from keras.models import Sequential
 from keras.layers import Dense, Activation
 
@@ -10,7 +11,7 @@ class NeuralNetwork(object):
 
     def __init__(self, 
                 input_shape=20, 
-                n_hidden=10,
+                n_hidden=20,
                 output_shape=5):
 
 
@@ -29,6 +30,12 @@ class NeuralNetwork(object):
         model.add(Activation("sigmoid"))
 
         self._model = model
+
+    def get_weights(self):
+        return self._model.get_weights()
+
+    def set_weights(self, weights):
+        return self._model.set_weights(weights)
 
     def return_model(self):
         return self._model
@@ -86,7 +93,12 @@ class SimpleNeuralNetwork(object):
         return self.weights
 
     def set_weights(self, weights):
-        self.weights = weights
+        self.weights = deepcopy(weights)
+
+        self.W1 = self.weights[0]
+        self.b1 = self.weights[1]
+        self.W2 = self.weights[2]
+        self.b2 = self.weights[3]
     
     def return_action(self, inputs):
         # inputs = np.array([inputs])
