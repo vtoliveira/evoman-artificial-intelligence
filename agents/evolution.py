@@ -13,6 +13,7 @@ class GeneticAlgorithm(object):
                 population_size=10,
                 number_of_generations=10,
                 mutation_rate=0.1,
+                es_strategy=False,
                 load_model=False,
                 model=None,
                 state=0
@@ -24,6 +25,7 @@ class GeneticAlgorithm(object):
         self.mutation_rate = mutation_rate
         self.load_model = load_model
         self.state = state
+        self.es_strategy = es_strategy
         
 
         if self.load_model==True:
@@ -40,7 +42,7 @@ class GeneticAlgorithm(object):
         population = dict()
         for i in range(self.population_size):
             # Initialize a neural model
-            model = SimpleNeuralNetwork()
+            model = NeuralNetwork()
 
             # Calculate fitness
             f, p, e, t = self.fitness(model)
@@ -102,6 +104,30 @@ class GeneticAlgorithm(object):
 
         return parent, mother
 
+    def es_crossover(self, parent, mother):
+        # Defining alpha
+        alpha = np.random.uniform(0, 1)
+
+        # Getting parent and mother weights
+        p_weights = parent.get_weights()
+        m_weights = mother.get_weights()
+
+        n_hidden_layers = len(p_weights)
+        crossover_layer = np.random.choice(n_hidden_layers)
+
+        original_shape = p_weights[crossover_layer].shape
+        
+        p_stacked_weight = np.hstack(p_weights[crossover_layer])
+        m_stacked_weight = np.hstack(m_weights[crossover_layer])
+
+        crossover_weights = p_stacked_weight*alpha + (1-alpha)*m_stacked_weight
+
+        p_weights[crossover_layer] = crossover_weights.reshape(original_shape)
+        parent.set_weights(p_weights)
+
+        return parent
+
+
     def select_contestant(self, population):
         return np.random.choice(list(population.keys()))
 
@@ -151,14 +177,19 @@ class GeneticAlgorithm(object):
                 new_parent_weight = parents[0].get_weights()
                 new_mother_weight = parents[1].get_weights()
 
-                parent = SimpleNeuralNetwork()
-                mother = SimpleNeuralNetwork()
+                parent = NeuralNetwork()
+                mother = NeuralNetwork()
 
                 parent.set_weights(new_parent_weight)
                 mother.set_weights(new_mother_weight)
 
-                parent, mother = self.crossover(parent, mother)
-                children, f_o = self.single_tournament(parent, mother)
+                if self.es_strategy==False:
+
+                    parent, mother = self.crossover(parent, mother)
+                    children, f_o = self.single_tournament(parent, mother)
+                else:
+                    children = self.es_crossover(parent, mother)
+                    f_o, _, _, _ = self.fitness(children)
                 
                 offspring[children] = f_o
 
