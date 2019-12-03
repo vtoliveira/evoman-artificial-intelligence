@@ -10,23 +10,25 @@ from controller import Controller
 
 from evolution import GeneticAlgorithm
 
-experiment_name = 'models/test'
+experiment_name = 'models/pop_50_gen_50__mr_02__1248_simplenet_victor_es_strategy_glorot_unif'
 
 if not os.path.exists(experiment_name):
 	os.makedirs(experiment_name)
 
 if __name__=='__main__':
     ga = GeneticAlgorithm(savepath=experiment_name,
-                          population_size=50,
-                          number_of_generations=20,
+                          population_size=100,
+                          number_of_generations=100,
                           mutation_rate=0.3,
-                          load_model=False,
-                          es_strategy=True)
+                          load_model=True,
+                          es_strategy=True,
+                          model='state_generation_99.pkl',
+                          state=100)
 
     env = Environment(speed="fastest",
                       enemymode="static",
                       player_controller=ga,
-                      enemies=[1, 3],
+                      enemies=[1, 2, 4, 8],
                       multiplemode="yes",
                       level=2,
                       logs="off")

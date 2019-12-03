@@ -42,7 +42,7 @@ class GeneticAlgorithm(object):
         population = dict()
         for i in range(self.population_size):
             # Initialize a neural model
-            model = NeuralNetwork()
+            model = SimpleNeuralNetwork()
 
             # Calculate fitness
             f, p, e, t = self.fitness(model)
@@ -177,8 +177,8 @@ class GeneticAlgorithm(object):
                 new_parent_weight = parents[0].get_weights()
                 new_mother_weight = parents[1].get_weights()
 
-                parent = NeuralNetwork()
-                mother = NeuralNetwork()
+                parent = SimpleNeuralNetwork()
+                mother = SimpleNeuralNetwork()
 
                 parent.set_weights(new_parent_weight)
                 mother.set_weights(new_mother_weight)
