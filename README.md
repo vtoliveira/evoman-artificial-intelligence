@@ -8,11 +8,13 @@ Code, docs for an AI based agent to play evoman game.
 
     pip install -r requirements.txt
     
+
+
 ## Code Structure
 
 To evolve an agent using neuroevolution you can run:
 
-    python neuroevolution.py
+    python agents/neuroevolution.py
 
 Inside the same file you can configure a few parameters:
 
@@ -23,6 +25,13 @@ Inside the same file you can configure a few parameters:
 You can give your experiment a name on and the best models after evolution will be saved on
 
     models/
+
+## Best Model
+To run the best model choosed for the final project, you can simply do:
+
+    python run_example.py
+
+By default, I included the best solution so far.
 
 
 
