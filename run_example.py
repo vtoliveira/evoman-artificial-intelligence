@@ -34,4 +34,3 @@ if __name__=='__main__':
     env.update_parameter('contacthurt', 'player')
 
     f, p, e, t = env.play()
-    print(f)

@@ -12,7 +12,7 @@ RUN: run status: enemy: 3; fitness: 74.7954422374313; player life: 0; enemy life
 
 RUN: run status: enemy: 4; fitness: 85.20931661435765; player life: 18.400000000000233; enemy life: 0; time: 758
 
-RUN: run status: enemy: 5; fitness: 85.7385318236463; player life: 22.00000000000024; enemy life: 0; time: 640
+RUN: run status: enemy: 5; fitness: 88.89972415482926; player life: 51.40000000000031; enemy life: 0; time: 513
 
 RUN: run status: enemy: 6; fitness: 85.44939992297537; player life: 16.60000000000023; enemy life: 0; time: 498
 
