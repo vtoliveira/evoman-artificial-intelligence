@@ -23,10 +23,10 @@ def open_file(filepath, generation):
 
 if __name__=='__main__':
     # Defining controller
-    trained = [1, 2, 4, 8]
-    tested  = [3, 5, 6, 7]
+    trained = [1, 5, 7, 8]
+    tested  = [3, 4, 2, 6]
 
-    experiment_name = 'pop_100_gen_100__mr_03__1248_simplenet_victor'
+    experiment_name = 'pop_100_gen_100__mr_03__1578_simplenet_victor'
 
     filepath = os.path.join('models', experiment_name)
     files = os.listdir(filepath)

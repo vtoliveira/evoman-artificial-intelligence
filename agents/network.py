@@ -73,10 +73,10 @@ class SimpleNeuralNetwork(object):
         self.n_hidden = n_hidden
         self.output_shape = output_shape
 
-        self.W1 = np.random.uniform(low=-0.5, high=0.5, size=(self.input_shape, n_hidden))
-        self.b1 = np.random.uniform(low=-0.5, high=0.5, size=n_hidden)
-        self.W2 = np.random.uniform(low=-0.5, high=0.5, size=(self.n_hidden, self.output_shape))
-        self.b2 = np.random.uniform(low=-0.5, high=0.5, size=self.output_shape)
+        self.W1 = self.initialize_weights((self.input_shape, n_hidden))
+        self.b1 = np.zeros(n_hidden)
+        self.W2 = self.initialize_weights((self.n_hidden, self.output_shape))
+        self.b2 = np.zeros(self.output_shape)
 
         self.weights = [self.W1, self.b1, self.W2, self.b2]
 
@@ -92,6 +92,10 @@ class SimpleNeuralNetwork(object):
     def get_weights(self):
         return self.weights
 
+    def initialize_weights(self, shape):
+        limit = np.sqrt( 6 / (shape[0] + shape[1]))
+        return np.random.uniform(-limit, limit, size=shape)
+
     def set_weights(self, weights):
         self.weights = deepcopy(weights)
 
@@ -102,6 +106,7 @@ class SimpleNeuralNetwork(object):
     
     def return_action(self, inputs):
         # inputs = np.array([inputs])
+        
         probabilities = np.round(self.predict(inputs))
 
         left = probabilities[0]

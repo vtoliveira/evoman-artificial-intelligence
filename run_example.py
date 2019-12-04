@@ -18,7 +18,7 @@ if not os.path.exists(experiment_name):
 
 if __name__=='__main__':
     # Defining controller
-    with open('models/pop_100_gen_100__mr_03__1578_simplenet_victor/state_generation_99.pkl', 'rb') as fp:
+    with open('models/pop_100_gen_100__mr_03__2346_simplenet_nh_20_victor/state_generation_99.pkl', 'rb') as fp:
         population = pickle.load(fp)
 
     population_ordered = dict(sorted(population.items(), key=lambda x: x[1], reverse=True))
@@ -28,7 +28,8 @@ if __name__=='__main__':
                       player_controller=list(population_ordered.keys())[0],
                       enemies=[1, 2, 3, 4, 5, 6, 7, 8],
                       multiplemode="yes",
-                      level=2)
+                      level=2,
+                      logs='on')
 
     env.update_parameter('contacthurt', 'player')
 
