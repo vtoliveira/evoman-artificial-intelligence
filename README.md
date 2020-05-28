@@ -2,7 +2,7 @@
 
 This repository presents an intelligent agent trained using neuroevolution techniques to play the evoman game. Along with code, I have also prepared a short paper (written in Portuguese). However, I will summarize the main results below and give a brief introduction to the problem.
 
-If you are interesting, you can read the project's short paper (Portuguese only) [here].(relatorio_final.pdf)
+If you are interesting, you can read the project's short paper (Portuguese only) [here](relatorio_final.pdf)
 ## Introduction
 
 This projected aimed to train an agent to beat the highest number of enemies in the evoman game using AI. In order to accomplish that, we used neuroevolution, a famous technique that combines neural networks and evolutionary algorithms to opmitize neural net's weights. Results came from a varying range of experiments where we changed enemies which we trained the agent and the ones we tested, as well as varying model's hyperparameters such as number of generations, population size, and even network's parameters such as number of hidden neurons.
